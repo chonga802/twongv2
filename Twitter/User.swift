@@ -14,26 +14,26 @@ let userDidLoginNotification = "userDidLoginNotification"
 let userDidLogoutNotification = "userDidLogoutNotification"
 
 class User: NSObject {
+    var dictionary: NSDictionary
+
+    var id: String?
     var name: String?
     var screenname: String?
     var profileImageUrl: String?
-    var tagline: String?
-    var dictionary: NSDictionary 
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
         
+        id = dictionary["id_str"] as? String
         name = dictionary["name"] as? String
         screenname = dictionary["screen_name"] as? String
         profileImageUrl = dictionary["profile_image_url"] as? String
-        tagline = dictionary["description"] as? String
     }
     
     func logout() {
         User.currentUser = nil
         TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(userDidLoginNotification, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
     }
     
     class var currentUser: User? {
@@ -42,7 +42,7 @@ class User: NSObject {
                 let data = NSUserDefaults.standardUserDefaults().objectForKey(currentUserKey) as? NSData
                 if data != nil {
                     do {
-                        if let dictionary = try NSJSONSerialization.JSONObjectWithData(data!, options:NSJSONReadingOptions(rawValue:0)) as? NSDictionary {
+                        if let dictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue:0)) as? NSDictionary {
                             _currentUser = User(dictionary: dictionary)
                         }
                     } catch {
