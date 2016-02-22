@@ -1,8 +1,8 @@
-# Project 3 - *Twong*
+# Project 3 - *Twong*: Twitter by Hong
 
-**Twong** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
+**Twong**, Twitter by Hong, is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **X** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -20,9 +20,9 @@ The following **optional** features are implemented:
 
 - [ ] When composing, you should have a countdown in the upper right for the tweet limit.
 - [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
-- [ ] Retweeting and favoriting should increment the retweet and favorite count.
-- [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
-- [ ] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
+- [X] Retweeting and favoriting should increment the retweet and favorite count.
+- [X] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
+- [X] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 
 The following **additional** features are implemented:
@@ -31,20 +31,21 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. The best way to update the favorite and retweet icons
+2. The proper way to make GET and POST request (I kept getting warnings about being deprecated)
+3. How did you get tweet to show up on timeline without pulling to refresh
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Video Walkthrough](twitter.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Getting information passed between controllers and the segues properly done had a bit of a learning curve.
 
 ## License
 

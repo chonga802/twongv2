@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HomeTimelineCellDelegate : class {
-    func reply(homeTimelineCell: HomeTimelineCell)
+    func reply(homeTimelineCell: HomeTimelineCell, tweet: Tweet?)
 }
 
 class HomeTimelineCell: UITableViewCell {
@@ -26,13 +26,15 @@ class HomeTimelineCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     
     @IBAction func onReply(sender: AnyObject) {
-        self.delegate?.reply(self)
+        self.delegate?.reply(self, tweet: self.tweet)
     }
     @IBAction func onRetweet(sender: AnyObject) {
         self.tweet?.retweetAction()
+        retweetButton.selected = (tweet?.isRetweeted)!
     }
     @IBAction func onFavorite(sender: AnyObject) {
         self.tweet?.favoriteAction()
+        favoriteButton.selected = (tweet?.isFavorited)!
     }
     
     override func awakeFromNib() {

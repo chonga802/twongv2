@@ -16,6 +16,7 @@ class ComposeViewController: UIViewController {
     
     weak var delegate: ComposeViewControllerDelegate?
     private var tweet: Tweet?
+    private var destUser: User?
 
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -27,10 +28,12 @@ class ComposeViewController: UIViewController {
     }
     
     @IBAction func onTweet(sender: AnyObject) {
-        TwitterClient.sharedInstance.postStatus(newTweet.text!)
-        
+        var statusId: Int? = nil
+        if let destUser = self.destUser {
+            statusId = destUser.id!
+        }
+        TwitterClient.sharedInstance.postStatus(newTweet.text!, statusId:  statusId)
         self.delegate?.addTweetToTimeline(self)
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -42,13 +45,25 @@ class ComposeViewController: UIViewController {
         nameLabel.text = User.currentUser!.name
         usernameLabel.text = "@\(User.currentUser!.screenname!)"
         newTweet.contentVerticalAlignment = .Top;
+        if let tweet = self.tweet {
+            if let user = tweet.user {
+                self.destUser = user
+                if let screenname = self.destUser!.screenname {
+                    newTweet.text = "@\(screenname)"
+                }
+            }
+        }
+    }
+    
+    func setTweet(tweet: Tweet?){
+        self.tweet = tweet
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     /*
     // MARK: - Navigation

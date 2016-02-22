@@ -37,8 +37,11 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func postStatus(tweetMsg: String) {
-        let params = ["status": tweetMsg]
+    func postStatus(tweetMsg: String, statusId: Int?) {
+        var params = ["status": tweetMsg]
+        if statusId != nil {
+             params["in_reply_to_status_id"] = String(statusId!)
+        }
         
         POST("1.1/statuses/update.json", parameters: params,
         success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in

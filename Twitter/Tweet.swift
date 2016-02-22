@@ -16,7 +16,7 @@ class Tweet: NSObject {
     var createdAt: NSDate?
     var createdAtDisplay: String?
      var createdAtDetailDisplay: String?
-    var favoritesCount: Int
+    var favoriteCount: Int
     var retweetCount: Int
     var isRetweeted: Bool?
     var isFavorited: Bool?
@@ -36,7 +36,7 @@ class Tweet: NSObject {
         formatter.dateFormat = "MM/dd/YY, HH:mm a"
         createdAtDetailDisplay = formatter.stringFromDate(createdAt!)
         
-        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
+        favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         
         if let retweeted = dictionary["retweeted"] as? Int {
@@ -77,28 +77,28 @@ class Tweet: NSObject {
     private func favorite() {
         print("favoriting")
         TwitterClient.sharedInstance.favorite(id!)
-        favoritesCount += 1
+        favoriteCount++
         isFavorited = true
     }
     
     private func unfavorite() {
         print("unfavoriting")
         TwitterClient.sharedInstance.unfavorite(id!)
-        favoritesCount -= 1
+        favoriteCount--
         isFavorited = false
     }
     
     private func retweet() {
         print("retweeting")
         TwitterClient.sharedInstance.retweet(id!)
-        retweetCount += 1
+        retweetCount++
         isRetweeted = true
     }
     
     private func unretweet() {
         print("unretweeting")
         TwitterClient.sharedInstance.unretweet(id!)
-        retweetCount -= 1
+        retweetCount--
         isRetweeted = false
     }
 }

@@ -84,25 +84,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Codepath rocks. https://www.codepath.com. I am pretty awesome. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tR7-2o-u9r">
-                                                    <rect key="frame" x="68" y="34" width="239.5" height="27"/>
+                                                    <rect key="frame" x="68" y="34" width="239.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeG-Qa-BSP">
-                                                    <rect key="frame" x="130" y="69" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeG-Qa-BSP">
+                                                    <rect key="frame" x="130" y="65" width="30" height="34"/>
                                                     <connections>
                                                         <action selector="onRetweet:" destination="Osa-tP-JxA" eventType="touchUpInside" id="mfj-Ts-4rh"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrB-ns-Cbe">
-                                                    <rect key="frame" x="200" y="69" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrB-ns-Cbe">
+                                                    <rect key="frame" x="200" y="65" width="30" height="34"/>
                                                     <connections>
                                                         <action selector="onFavorite:" destination="Osa-tP-JxA" eventType="touchUpInside" id="rBP-vL-ybN"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpR-Qs-M45">
-                                                    <rect key="frame" x="60" y="69" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpR-Qs-M45">
+                                                    <rect key="frame" x="60" y="65" width="30" height="34"/>
                                                     <connections>
                                                         <action selector="onReply:" destination="Osa-tP-JxA" eventType="touchUpInside" id="TtQ-7J-BK3"/>
                                                     </connections>
@@ -186,6 +186,7 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="rXn-nf-0Mp"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="navBar" destination="vfl-MI-3cx" id="X5h-E9-f9i"/>
                         <outlet property="tableView" destination="3lb-c5-bsj" id="YXR-Ev-9MK"/>
                     </connections>
                 </viewController>
@@ -281,20 +282,20 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSy-eY-Vtp">
-                                <rect key="frame" x="20" y="275" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSy-eY-Vtp">
+                                <rect key="frame" x="20" y="275" width="30" height="34"/>
                                 <connections>
                                     <segue destination="3yy-QL-X9d" kind="modal" identifier="detailToComposeSegue" id="yvW-w5-93f"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPt-ck-6cr">
-                                <rect key="frame" x="100" y="275" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPt-ck-6cr">
+                                <rect key="frame" x="100" y="275" width="30" height="34"/>
                                 <connections>
                                     <action selector="onRetweet:" destination="7Oh-zT-RiY" eventType="touchUpInside" id="AVO-WZ-2eC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utJ-Pc-Gel">
-                                <rect key="frame" x="180" y="275" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utJ-Pc-Gel">
+                                <rect key="frame" x="180" y="275" width="30" height="34"/>
                                 <connections>
                                     <action selector="onFavorite:" destination="7Oh-zT-RiY" eventType="touchUpInside" id="Mbc-1S-OH1"/>
                                 </connections>
@@ -457,6 +458,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jPj-Th-AQX"/>
-        <segue reference="yvW-w5-93f"/>
+        <segue reference="Is7-lE-2jZ"/>
     </inferredMetricsTieBreakers>
 </document>

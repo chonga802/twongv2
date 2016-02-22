@@ -37,10 +37,14 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onRetweet(sender: AnyObject) {
         self.tweet?.retweetAction()
+        retweetButton.selected = (self.tweet?.isRetweeted)!
+        retweetNum?.text = "\(tweet!.retweetCount)"
     }
     
     @IBAction func onFavorite(sender: AnyObject) {
         self.tweet?.favoriteAction()
+        favoriteButton.selected = (self.tweet?.isFavorited)!
+        favoriteNum?.text = "\(tweet!.favoriteCount)"
     }
     
     
@@ -70,7 +74,7 @@ class TweetDetailViewController: UIViewController {
             tweetLabel?.text = tweet!.text
             timeLabel?.text = tweet!.createdAtDetailDisplay
             retweetNum?.text = "\(tweet!.retweetCount)"
-            favoriteNum?.text = "\(tweet!.favoritesCount)"
+            favoriteNum?.text = "\(tweet!.favoriteCount)"
             
             retweetButton?.selected = tweet!.isRetweeted!
             favoriteButton?.selected = tweet!.isFavorited!
@@ -82,14 +86,21 @@ class TweetDetailViewController: UIViewController {
         makeTweet()
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier! {
+            case "detailToComposeSegue":
+                let vc = segue.destinationViewController as! ComposeViewController
+                vc.setTweet(self.tweet)
+                
+            default:
+                return
+        }
     }
-    */
+
 
 }

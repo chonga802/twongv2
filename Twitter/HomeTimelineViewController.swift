@@ -11,6 +11,7 @@ import UIKit
 class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, HomeTimelineCellDelegate, ComposeViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navBar: UINavigationBar!
     
     @IBAction func onLogout(sender: AnyObject) {
         User.currentUser?.logout()
@@ -22,6 +23,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     }
 
     var tweets: [Tweet]?
+    var selectedTweet: Tweet?
     private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
@@ -31,6 +33,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
         tableView.dataSource = self
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+//        navBar.backgroundColor = UIColor(red: 0.1, green: 0.3, blue: 0.8, alpha: 1.0)
+//        navBar.tintColor = UIColor.whiteColor()
+//        navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         // Pull to refresh
         refreshControl = UIRefreshControl()
@@ -97,7 +103,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
                 
             case "homeToComposeSegue":
                 let vc = segue.destinationViewController as! ComposeViewController
-                vc.delegate = self
+                vc.setTweet(self.selectedTweet)
                 
             default:
                 return
@@ -106,7 +112,8 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: HomeTimelineCellDelegate
     
-    func reply(homeTimelineCell: HomeTimelineCell) {
+    func reply(homeTimelineCell: HomeTimelineCell, tweet: Tweet?) {
+        self.selectedTweet = tweet
         performSegueWithIdentifier("homeToComposeSegue", sender: self)
     }
     
