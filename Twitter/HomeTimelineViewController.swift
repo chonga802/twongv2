@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum TimelineType {
+    case Home, Mentions
+}
+
 class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, HomeTimelineCellDelegate, ComposeViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
@@ -21,12 +25,19 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func onNew(sender: AnyObject) {
         self.performSegueWithIdentifier("homeToComposeSegue", sender: self)
     }
-
+    
+    @IBAction func tapProfPic(sender: UITapGestureRecognizer) {
+         tableView.allowsSelection = false
+         performSegueWithIdentifier("homeToProfileSegue", sender: self)
+    }
+    
     var tweets: [Tweet]?
     var selectedTweet: Tweet?
     private var refreshControl: UIRefreshControl!
+    private var timelineType = TimelineType.Home
     
     override func viewDidLoad() {
+        print("VIEW DID LOAD")
         super.viewDidLoad()
         
         tableView.delegate = self
@@ -43,7 +54,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.insertSubview(refreshControl, atIndex: 0)
         
-        self.getHomeTimeline()
+        self.getTimeline()
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,19 +62,34 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    func getHomeTimeline() {
+    func getTimeline() {
+        print("GETTING TIMELINE")
         self.refreshControl?.beginRefreshing()
-        
-        // grab tweets from home timeline
-        TwitterClient.sharedInstance.homeTimelineWithParams(nil) { (tweets, error) -> () in
+        let completion = {(tweets: [Tweet]?, error: NSError?) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
         }
+        
+        switch timelineType {
+            case .Home:
+                print("IN HOME TIMELINE")
+                TwitterClient.sharedInstance.homeTimeline(completion)
+                self.navigationItem.title = "Home"
+                
+            case .Mentions:
+                print("IN MENTIONS TIMELINE")
+                TwitterClient.sharedInstance.mentionsTimeline(completion)
+                self.navigationItem.title = "Mentions"
+        }
     }
     
     func onRefresh() {
-        self.getHomeTimeline()
+        self.getTimeline()
+    }
+    
+    func setTimelineType(timelineType: TimelineType) {
+        self.timelineType = timelineType
     }
     
     // MARK: Table View
@@ -104,7 +130,13 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
             case "homeToComposeSegue":
                 let vc = segue.destinationViewController as! ComposeViewController
                 vc.setTweet(self.selectedTweet)
-                
+            
+            case "homeToProfileSegue":
+                if let indexPath = self.tableView.indexPathForSelectedRow {
+                    let vc = segue.destinationViewController as! ProfileViewController
+                    vc.setUser(self.tweets![indexPath.row].user)
+                }
+            
             default:
                 return
         }
@@ -121,7 +153,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     
     func addTweetToTimeline(composeViewController: ComposeViewController) {
         // refresh timeline after tweet created
-        self.getHomeTimeline()
+        self.getTimeline()
     }
     
 

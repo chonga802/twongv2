@@ -42,11 +42,11 @@ class HomeTimelineCell: UITableViewCell {
         profPic.layer.cornerRadius = 3
         profPic.clipsToBounds = true
         
-        self.replyButton.setBackgroundImage(UIImage(named: "reply") as UIImage?, forState: .Normal)
-        self.retweetButton.setBackgroundImage(UIImage(named: "retweet") as UIImage?, forState: .Normal)
-        self.retweetButton.setBackgroundImage(UIImage(named: "retweet_selected") as UIImage?, forState: .Selected)
-        self.favoriteButton.setBackgroundImage(UIImage(named: "favorite") as UIImage?, forState: .Normal)
-        self.favoriteButton.setBackgroundImage(UIImage(named: "favorite_selected") as UIImage?, forState: .Selected)
+        replyButton.setBackgroundImage(UIImage(named: "reply") as UIImage?, forState: .Normal)
+        retweetButton.setBackgroundImage(UIImage(named: "retweet") as UIImage?, forState: .Normal)
+        retweetButton.setBackgroundImage(UIImage(named: "retweet_selected") as UIImage?, forState: .Selected)
+        favoriteButton.setBackgroundImage(UIImage(named: "favorite") as UIImage?, forState: .Normal)
+        favoriteButton.setBackgroundImage(UIImage(named: "favorite_selected") as UIImage?, forState: .Selected)
         
         makeTweet()
     }
@@ -57,6 +57,9 @@ class HomeTimelineCell: UITableViewCell {
             nameLabel.text = user!.name
             usernameLabel.text = "@\(user!.screenname!)"
             profPic.setImageWithURL(NSURL(string: user!.profileImageUrl!)!)
+//            let profPicTap = UITapGestureRecognizer(target: self, action:Selector("profPicTap:"))
+//            profPic.addGestureRecognizer(profPicTap)
+            profPic.userInteractionEnabled = true
             timeLabel.text = tweet.createdAtDisplay
             tweetLabel.text = tweet.text
             
