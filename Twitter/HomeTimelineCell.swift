@@ -57,8 +57,6 @@ class HomeTimelineCell: UITableViewCell {
             nameLabel.text = user!.name
             usernameLabel.text = "@\(user!.screenname!)"
             profPic.setImageWithURL(NSURL(string: user!.profileImageUrl!)!)
-//            let profPicTap = UITapGestureRecognizer(target: self, action:Selector("profPicTap:"))
-//            profPic.addGestureRecognizer(profPicTap)
             profPic.userInteractionEnabled = true
             timeLabel.text = tweet.createdAtDisplay
             tweetLabel.text = tweet.text

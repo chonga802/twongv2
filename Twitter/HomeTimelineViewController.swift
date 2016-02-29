@@ -16,6 +16,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var navBarTitle: UINavigationItem!
     
     @IBAction func onLogout(sender: AnyObject) {
         User.currentUser?.logout()
@@ -28,7 +29,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBAction func tapProfPic(sender: UITapGestureRecognizer) {
          tableView.allowsSelection = false
-         performSegueWithIdentifier("homeToProfileSegue", sender: self)
+         performSegueWithIdentifier("homeToProfileSegue", sender: sender)
     }
     
     var tweets: [Tweet]?
@@ -63,7 +64,6 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func getTimeline() {
-        print("GETTING TIMELINE")
         self.refreshControl?.beginRefreshing()
         let completion = {(tweets: [Tweet]?, error: NSError?) -> () in
             self.tweets = tweets
@@ -73,14 +73,12 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
         
         switch timelineType {
             case .Home:
-                print("IN HOME TIMELINE")
                 TwitterClient.sharedInstance.homeTimeline(completion)
-                self.navigationItem.title = "Home"
-                
+                navBarTitle?.title = "Home"
+            
             case .Mentions:
-                print("IN MENTIONS TIMELINE")
                 TwitterClient.sharedInstance.mentionsTimeline(completion)
-                self.navigationItem.title = "Mentions"
+                navBarTitle?.title = "Mentions"
         }
     }
     
@@ -132,9 +130,13 @@ class HomeTimelineViewController: UIViewController, UITableViewDataSource, UITab
                 vc.setTweet(self.selectedTweet)
             
             case "homeToProfileSegue":
-                if let indexPath = self.tableView.indexPathForSelectedRow {
+                print("HOME TO PROFILE")
+                let locationInView = sender!.locationInView(self.tableView)
+                if let indexPath = self.tableView.indexPathForRowAtPoint(locationInView) {
+                    print("user")
+                    print(tweets![indexPath.row].user!)
                     let vc = segue.destinationViewController as! ProfileViewController
-                    vc.setUser(self.tweets![indexPath.row].user)
+                    vc.setUser(tweets![indexPath.row].user!)
                 }
             
             default:

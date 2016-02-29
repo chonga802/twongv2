@@ -96,7 +96,11 @@ class TweetDetailViewController: UIViewController {
             case "detailToComposeSegue":
                 let vc = segue.destinationViewController as! ComposeViewController
                 vc.setTweet(self.tweet)
-                
+            
+            case "detailToHomeSegue":
+                let vc = segue.destinationViewController as! MenuViewController
+                vc.setVcType(VCType.Home)
+            
             default:
                 return
         }

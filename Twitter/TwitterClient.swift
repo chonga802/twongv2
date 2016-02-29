@@ -49,6 +49,24 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func userTimeline(userId: Int, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+        print("USER TIMELINE API CALL")
+        print("userId:")
+        print(userId)
+        let params = ["user_id": userId]
+        GET("1.1/statuses/user_timeline.json", parameters: params,
+            success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+                let tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
+                print("tweets:")
+                print(tweets)
+                completion(tweets: tweets, error: nil)
+            },
+            failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("error getting user timeline")
+                completion(tweets: nil, error: error)
+        })
+    }
+    
     func postStatus(tweetMsg: String, statusId: Int?) {
         var params = ["status": tweetMsg]
         if statusId != nil {

@@ -21,16 +21,25 @@ class User: NSObject {
     var screenname: String?
     var profileImageUrl: String?
     var coverImageUrl: String?
+    var tweetNum: Int?
+    var followingNum: Int?
+    var followerNum: Int?
+    
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
+        
+        //print(dictionary)
 
         id = dictionary["id"] as? Int
         name = dictionary["name"] as? String
         screenname = dictionary["screen_name"] as? String
-        profileImageUrl = dictionary["profile_image_url_https"] as? String
+        profileImageUrl = dictionary["profile_image_url"] as? String
         profileImageUrl = profileImageUrl!.stringByReplacingOccurrencesOfString("_normal", withString: "")
         coverImageUrl = dictionary["profile_banner_url"] as? String
+        tweetNum = dictionary["statuses_count"] as? Int
+        followingNum = dictionary["friends_count"] as? Int
+        followerNum = dictionary["followers_count"] as? Int
     }
     
     func logout() {

@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum VCType {
+    case Home, Profile, Mentions, Compose, Details
+}
+
 class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var menuView: UITableView!
@@ -17,8 +21,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var homeTimelineViewController: UIViewController!
     private var profileViewController: UIViewController!
     private var mentionsViewController: UIViewController!
+    private var composeViewController: UIViewController!
+    private var detailsViewController: UIViewController!
     
     var viewControllers: [UIViewController] = []
+    
+    var vcType : VCType = VCType.Home
     
     var contentViewController: UIViewController! {
         didSet(oldContentViewController) {
@@ -45,20 +53,49 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         menuView.delegate = self
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
         homeTimelineViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController")
         let homeVC = homeTimelineViewController as! HomeTimelineViewController
         homeVC.setTimelineType(TimelineType.Home)
         homeVC.getTimeline()
+        
         profileViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileViewController")
+        
         mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController")
         let mentionsVC = mentionsViewController as! HomeTimelineViewController
         mentionsVC.setTimelineType(TimelineType.Mentions)
         
+        composeViewController = storyboard.instantiateViewControllerWithIdentifier("ComposeViewController")
+        
+        detailsViewController = storyboard.instantiateViewControllerWithIdentifier("TweetDetailViewController")
+        
         viewControllers.append(homeTimelineViewController)
         viewControllers.append(profileViewController)
         viewControllers.append(mentionsViewController)
+        viewControllers.append(composeViewController)
+        viewControllers.append(detailsViewController)
         
-        self.contentViewController = homeTimelineViewController
+        switch vcType {
+            case .Home:
+                 self.contentViewController = homeTimelineViewController
+                
+            case .Profile:
+                self.contentViewController = profileViewController
+                
+            case .Mentions:
+                self.contentViewController = mentionsViewController
+                
+            case .Compose:
+                self.contentViewController = composeViewController
+                
+            case .Details:
+                self.contentViewController = detailsViewController
+        }
+        
+    }
+    
+    func setVcType(vcType: VCType) {
+        self.vcType = vcType
     }
 
     override func didReceiveMemoryWarning() {
